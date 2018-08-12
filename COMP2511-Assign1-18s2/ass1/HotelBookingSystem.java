@@ -5,9 +5,11 @@ import java.util.ArrayList;
 public class HotelBookingSystem {
 
 	private ArrayList<Hotel> hotelList;
+	private ArrayList<String> bookNames;
 	
 	public HotelBookingSystem() {
 		this.hotelList = new ArrayList<Hotel>();
+		this.bookNames = new ArrayList<String>();
 	}
 	
 	public static void main(String[] args) {
@@ -44,6 +46,12 @@ public class HotelBookingSystem {
 			hotelExist = true;
 		}
 		return RoomSuccess;
+	}
+	
+	public boolean bookRoom(String name, String capacity, String month, String day, String length, String size1, String num1, String size2, String num2, String size3, String num3) {
+		
+		
+		return true;
 	}
 	
 	public void printHotel(String hotelName) {
