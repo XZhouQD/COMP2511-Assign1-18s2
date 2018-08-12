@@ -57,4 +57,11 @@ public class Room {
 		return null;
 	}
 	
+	public String toString() {
+		String str = roomNumber;
+		for(Order order: orders)
+			str += " " + order.toString();
+		return str;
+	}
+	
 }

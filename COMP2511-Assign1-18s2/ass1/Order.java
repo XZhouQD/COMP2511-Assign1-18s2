@@ -1,6 +1,8 @@
 package ass1;
 
 import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 public class Order {
 
@@ -31,5 +33,9 @@ public class Order {
 	
 	public int getLength() {
 		return this.length;
+	}
+	
+	public String toString() {
+		return startDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH) + " " + startDate.getDayOfMonth() + " " + length;
 	}
 }
