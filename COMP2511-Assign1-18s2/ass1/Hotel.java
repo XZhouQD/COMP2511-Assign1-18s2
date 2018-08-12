@@ -33,7 +33,7 @@ public class Hotel {
 		return rooms;
 	}
 	
-	public void printHotel() {
+	public void print() {
 		for(Room room: rooms)
 			System.out.println(name + " " + room.toString());
 	}
