@@ -49,7 +49,11 @@ public class HotelBookingSystem {
 	}
 	
 	public boolean bookRoom(String name, String capacity, String month, String day, String length, String size1, String num1, String size2, String num2, String size3, String num3) {
-		
+		for(String book:bookNames) {
+			if(book==name) {
+				System.out.println("Booking Rejected");
+			}
+		}
 		
 		return true;
 	}
