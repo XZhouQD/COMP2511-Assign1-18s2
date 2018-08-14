@@ -1,12 +1,16 @@
 package ass1;
 
-import java.text.DateFormat;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.Scanner;
 
 public class HotelBookingSystem {
 
@@ -17,23 +21,47 @@ public class HotelBookingSystem {
 	public HotelBookingSystem() {
 		this.hotelList = new ArrayList<Hotel>();
 		this.bookNames = new ArrayList<String>();
-		this.emptyOrder = new Order("empty", "-1", LocalDate.parse("1980-01-01"), 1);
+		this.emptyOrder = new Order("empty", "-1", "-1", LocalDate.parse("1980-01-01"), 1);
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		// TODO Auto-generated method stub
 		HotelBookingSystem HBSys = new HotelBookingSystem();
-		HBSys.addHotelRoom("Test1", "101", "2");
-		HBSys.addHotelRoom("Test1", "102", "1");
-		HBSys.addHotelRoom("Test1", "103", "3");
-		HBSys.addHotelRoom("Test2", "101", "1");
-		HBSys.addHotelRoom("Test2", "201", "1");
-		HBSys.addHotelRoom("Test2", "202", "2");
-		HBSys.addHotelRoom("Test3", "101", "2");
-		HBSys.addHotelRoom("Test3", "103", "3");
-		HBSys.printHotel("Test1");
-		HBSys.printHotel("Test2");
-		HBSys.printHotel("Test3");
+		Scanner sc = null;
+		try {
+			sc = new Scanner(new File(args[0]));
+			while (sc.hasNextLine()) {
+				HBSys.functionDistributor(sc.nextLine());
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (sc != null)
+				sc.close();
+		}
+	}
+	
+	public String getStringByIndex(String[] arguments, int index) {
+		try {
+			String toReturn = arguments[index];
+			return toReturn;
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
+	}
+	
+	public void functionDistributor (String input) throws ParseException {
+		String[] arguments = input.split(" ");
+		if(arguments[0] == "Hotel")
+			this.addHotelRoom(arguments[1], arguments[2], arguments[3]);
+		if(arguments[0] == "Cancel")
+			System.out.println("Cancel "+this.cancelBooking(arguments[1]));
+		if(arguments[0] == "Print")
+			this.printHotel(arguments[1]);
+		if(arguments[0] == "Booking")
+			System.out.println("Booking " + this.bookRoom(arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6], this.getStringByIndex(arguments, 7), this.getStringByIndex(arguments, 8), this.getStringByIndex(arguments, 9), this.getStringByIndex(arguments, 10)));
+		if(arguments[0] == "Change")
+			System.out.println("Change " + this.changeBooking(arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6], this.getStringByIndex(arguments, 7), this.getStringByIndex(arguments, 8), this.getStringByIndex(arguments, 9), this.getStringByIndex(arguments, 10)));
 	}
 	
 	public boolean addHotelRoom(String hotelName, String roomNumber, String capacity) {
@@ -56,17 +84,15 @@ public class HotelBookingSystem {
 		return RoomSuccess;
 	}
 	
-	public boolean bookRoom(String name, String month, String day, String length, String size1, String num1, String size2, String num2, String size3, String num3) throws ParseException {
-		for(String book:bookNames) {
-			if(book==name) {
-				System.out.println("Booking Rejected");
-			}
+	public String bookRoom(String name, String month, String day, String length, String size1, String num1, String size2, String num2, String size3, String num3) throws ParseException {
+		if(bookNames.contains(name)) {
+			return "Rejected";
 		}
-		DateFormat original = new SimpleDateFormat("yyyy MMM dd");
-		DateFormat target = new SimpleDateFormat("yyyy-MM-dd");
-		Date fullDate = original.parse("2018 "+month+" "+day);
-		String formatDate = target.format(fullDate);
-		LocalDate startDate = LocalDate.parse(formatDate);
+		Date month2 = new SimpleDateFormat("MMM", Locale.ENGLISH).parse(month);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(month2);
+		int monthInt = cal.get(Calendar.MONTH)+1;
+		LocalDate startDate = LocalDate.of(2018, monthInt, Integer.parseInt(day));
 		int bookLength = Integer.parseInt(length);
 		Capacity capa1 = Capacity.valueOf(size1.toUpperCase());
 		int bookNum1 = Integer.parseInt(num1);
@@ -82,7 +108,6 @@ public class HotelBookingSystem {
 			bookNum3 = Integer.parseInt(num3);
 			capa3 = Capacity.valueOf(size3.toUpperCase());
 		}
-		boolean available = false;
 		ArrayList<Order> orderList = new ArrayList<Order>();
 		for(Hotel hotel : hotelList) {
 			boolean hotelFit = true;
@@ -105,12 +130,11 @@ public class HotelBookingSystem {
 					orderList.add(newOrder);
 			}
 			if(hotelFit == true) {
-				String output = "Booking "+ name + " " + hotel.getName();
+				String output = name + " " + hotel.getName();
 				for(Order order : orderList)
 					output += " " + order.getRoomNumber();
-				System.out.println(output);
-				available = true;
-				break;
+				this.bookNames.add(name);
+				return output;
 			}
 			else {
 				hotelFit = true;
@@ -122,10 +146,62 @@ public class HotelBookingSystem {
 				orderList.clear();
 			}
 		}
+		return "Rejected";
+	}
+	
+	public String changeBooking(String name, String month, String day, String length, String size1, String num1, String size2, String num2, String size3, String num3) throws ParseException {
+		if(!bookNames.contains(name)) {
+			return "Rejected";
+		}
+		ArrayList<Order> originalOrders = new ArrayList<Order>();		
+		for(Hotel hotel : hotelList) {
+			for(Room room : hotel.getRooms()) {
+				boolean release = true;
+				while(release) {
+					Order tempOrder = room.releaseOrder(name);
+					if(tempOrder != null) 
+						originalOrders.add(tempOrder);
+					 else 
+						release = false;
+				}
+			}
+		}
+		bookNames.remove(name);
+		String result = this.bookRoom(name, month, day, length, size1, num1, size2, num2, size3, num3);
+		if(result == "Rejected") {
+			for(Order order : originalOrders) {
+				for(Hotel hotel: hotelList) {
+					if(hotel.getName() == order.getHotelName()) {
+						for(Room room : hotel.getRooms()) {
+							if(room.getRoomNumber() == order.getRoomNumber())
+								room.addOrder(order);
+						}
+					}
+				}
+			}
+			return result;
+		} else {
+			return result;
+		}
+	}
+	
+	public String cancelBooking(String name) {
+		if(bookNames.contains(name)) {
+			for(Hotel hotel : hotelList) {
+				for(Room room : hotel.getRooms()) {
+					boolean release = true;
+					while(release) {
+						Order tempOrder = room.releaseOrder(name);
+						if(tempOrder == null){
+							release = false;
+						}
+					}
+				}
+			}
+			return name;
+		} else
+			return "Rejected";
 		
-		if(available == false) System.out.println("Booking Rejected");
-		
-		return true;
 	}
 	
 	public void printHotel(String hotelName) {

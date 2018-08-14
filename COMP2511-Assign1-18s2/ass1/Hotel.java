@@ -21,7 +21,7 @@ public class Hotel {
 		if(hasRoom)
 			return false;
 		else {
-			rooms.add(new Room(roomNumber, capacity));
+			rooms.add(new Room(roomNumber, this.name, capacity));
 			return true;
 		}
 	}
@@ -36,7 +36,7 @@ public class Hotel {
 	
 	public Order tryBooking(String name, Capacity capacity, LocalDate startDate, int length) {
 		if(capacity == null || startDate == null || length == 0)
-			return new Order("empty", "-1", LocalDate.parse("1980-01-01"), 1);
+			return new Order("empty", "-1", "-1", LocalDate.parse("1980-01-01"), 1);
 		for(Room room : rooms) {
 			Order temp = room.makeOrder(name, startDate, capacity, length);
 			if(temp!=null) return temp;

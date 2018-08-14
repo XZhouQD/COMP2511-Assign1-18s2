@@ -6,12 +6,14 @@ import java.util.ArrayList;
 public class Room {
 
 	private String roomNumber;
+	private String hotelName;
 	private Capacity capacity;
 	private ArrayList<Order> orders;
 	
-	public Room(String roomNumber, Capacity capacity) {
+	public Room(String roomNumber, String hotelName, Capacity capacity) {
 		super();
 		this.roomNumber = roomNumber;
+		this.hotelName = hotelName;
 		this.capacity = capacity;
 		this.orders = new ArrayList<Order>();
 	}
@@ -37,7 +39,7 @@ public class Room {
 			}
 		}
 		if(available && this.capacity.equals(capacity)) {
-			Order order = new Order(name, this.roomNumber, startDate, length);
+			Order order = new Order(name, this.hotelName, this.roomNumber, startDate, length);
 			addOrder(order);
 			return order;
 		}

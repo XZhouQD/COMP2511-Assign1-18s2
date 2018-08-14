@@ -7,14 +7,16 @@ import java.util.Locale;
 public class Order {
 
 	private String name;
+	private String hotelName;
 	private String roomNumber;
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private int length;
 	
-	public Order(String name, String roomNumber, LocalDate startDate, int length) {
+	public Order(String name, String hotelName, String roomNumber, LocalDate startDate, int length) {
 		super();
 		this.name = name;
+		this.hotelName = hotelName;
 		this.roomNumber = roomNumber;
 		this.startDate = startDate;
 		this.endDate = this.startDate.plusDays(length-1);
@@ -23,6 +25,10 @@ public class Order {
 	
 	public String getName() {
 		return this.name;
+	}
+	
+	public String getHotelName() {
+		return this.hotelName;
 	}
 	
 	public String getRoomNumber() {
