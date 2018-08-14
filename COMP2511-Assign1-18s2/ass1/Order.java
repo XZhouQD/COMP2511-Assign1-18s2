@@ -48,7 +48,7 @@ public class Order {
 	}
 	
 	public String toString() {
-		return startDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH) + " " + startDate.getDayOfMonth() + " " + length;
+		return name + startDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH) + " " + startDate.getDayOfMonth() + " " + length;
 	}
 
 	@Override

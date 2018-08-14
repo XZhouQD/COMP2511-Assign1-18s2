@@ -140,7 +140,7 @@ public class HotelBookingSystem {
 				for(Room room : hotel.getRooms()) {
 					boolean release = true;
 					while(release)
-						release = room.releaseOrder(name) != null;
+						release = (room.releaseOrder(name) != null);
 				}
 				orderList.clear();
 			}
@@ -178,6 +178,7 @@ public class HotelBookingSystem {
 					}
 				}
 			}
+			System.out.println(name +"'s order has beed recovered");
 			return result;
 		} else {
 			return result;

@@ -33,7 +33,8 @@ public class Room {
 	public Order makeOrder(String name, LocalDate startDate, Capacity capacity, int length) {
 		boolean available = true;
 		for(Order order : orders) {
-			if (startDate.isAfter(order.getEndDate()) || startDate.isEqual(order.getEndDate()) || startDate.plusDays(length-1).isEqual(order.getStartDate()) || startDate.plusDays(length-1).isBefore(order.getStartDate())) {
+			if (startDate.isAfter(order.getEndDate()) || startDate.plusDays(length-1).isBefore(order.getStartDate())) {
+				available = true;
 			} else {
 				available = false;
 			}
@@ -52,9 +53,9 @@ public class Room {
 	
 	public Order releaseOrder(String name) {
 		for(Order order: orders) {
-			if(order.getName() == name) {
+			if(order.getName().equals(name)) {
 				Order toRelease = order;
-				orders.remove(order);
+				orders.remove(toRelease);
 				return toRelease;
 			}
 		}
