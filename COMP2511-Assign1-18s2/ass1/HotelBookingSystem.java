@@ -113,20 +113,50 @@ public class HotelBookingSystem {
 			for(int i = 0; i < bookNum1; i++) {
 				Order newOrder = hotel.tryBooking(name, capa1, startDate, bookLength);
 				if(newOrder == null) hotelFit = false;
-				else if(!newOrder.equals(emptyOrder))
-					orderList.add(newOrder);
+				else if(!newOrder.equals(emptyOrder)) {
+					for(int i1 = 0; i1 < orderList.size(); i1++) {
+						if(Integer.parseInt(orderList.get(i1).getRoomNumber()) < Integer.parseInt(newOrder.getRoomNumber()))
+							continue;
+						else {
+							orderList.add(i1, newOrder);
+							break;
+						}
+					}
+					if(!orderList.contains(newOrder)) 
+						orderList.add(newOrder);
+				}
 			}
 			for(int i = 0; i < bookNum2; i++) {
 				Order newOrder = hotel.tryBooking(name, capa2, startDate, bookLength);
 				if(newOrder == null) hotelFit = false;
-				else if(!newOrder.equals(emptyOrder))
-					orderList.add(newOrder);
+				else if(!newOrder.equals(emptyOrder)){
+					for(int i1 = 0; i1 < orderList.size(); i1++) {
+						if(Integer.parseInt(orderList.get(i1).getRoomNumber()) < Integer.parseInt(newOrder.getRoomNumber()))
+							continue;
+						else {
+							orderList.add(i1, newOrder);
+							break;
+						}
+					}
+					if(!orderList.contains(newOrder)) 
+						orderList.add(newOrder);
+				}
 			}
 			for(int i = 0; i < bookNum3; i++) {
 				Order newOrder = hotel.tryBooking(name, capa3, startDate, bookLength);
 				if(newOrder == null) hotelFit = false;
-				else if(!newOrder.equals(emptyOrder))
-					orderList.add(newOrder);
+				else if(!newOrder.equals(emptyOrder)){
+					for(int i1 = 0; i1 < orderList.size(); i1++) {
+						if(Integer.parseInt(orderList.get(i1).getRoomNumber()) < Integer.parseInt(newOrder.getRoomNumber()))
+							continue;
+						else {
+							orderList.add(i1, newOrder);
+							break;
+						}
+					}
+					if(!orderList.contains(newOrder)) 
+						orderList.add(newOrder);
+				}
 			}
 			if(hotelFit == true) {
 				String output = name + " " + hotel.getName();

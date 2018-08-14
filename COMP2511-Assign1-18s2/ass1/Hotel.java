@@ -25,8 +25,10 @@ public class Hotel {
 			for (int i = 0; i < rooms.size(); i++) {
 				if(Integer.parseInt(rooms.get(i).getRoomNumber()) < Integer.parseInt(roomNumber))
 					continue;
-				else
+				else {
 					rooms.add(i, newRoom);
+					return true;
+				}
 			}
 			rooms.add(newRoom);
 			return true;
@@ -62,6 +64,6 @@ public class Hotel {
 	
 	public void print() {
 		for(Room room: rooms)
-			System.out.println(room.toString());
+			System.out.println(this.name +" " + room.toString());
 	}
 }

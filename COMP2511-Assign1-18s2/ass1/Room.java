@@ -37,6 +37,7 @@ public class Room {
 				available = true;
 			} else {
 				available = false;
+				break;
 			}
 		}
 		if(available && this.capacity.equals(capacity)) {

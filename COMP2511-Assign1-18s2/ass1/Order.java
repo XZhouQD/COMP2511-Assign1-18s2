@@ -19,7 +19,7 @@ public class Order {
 		this.hotelName = hotelName;
 		this.roomNumber = roomNumber;
 		this.startDate = startDate;
-		this.endDate = this.startDate.plusDays(length-1);
+		this.endDate = this.startDate.plusDays(length);
 		this.length = length;
 	}
 	
@@ -48,7 +48,7 @@ public class Order {
 	}
 	
 	public String toString() {
-		return name + startDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH) + " " + startDate.getDayOfMonth() + " " + length;
+		return startDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH) + " " + startDate.getDayOfMonth() + " " + length;
 	}
 
 	@Override
