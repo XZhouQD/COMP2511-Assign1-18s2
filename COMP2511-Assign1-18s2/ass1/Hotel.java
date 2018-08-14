@@ -1,5 +1,6 @@
 package ass1;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Hotel {
@@ -31,6 +32,25 @@ public class Hotel {
 
 	public ArrayList<Room> getRooms() {
 		return rooms;
+	}
+	
+	public Order tryBooking(String name, Capacity capacity, LocalDate startDate, int length) {
+		if(capacity == null || startDate == null || length == 0)
+			return new Order("empty", "-1", LocalDate.parse("1980-01-01"), 1);
+		for(Room room : rooms) {
+			Order temp = room.makeOrder(name, startDate, capacity, length);
+			if(temp!=null) return temp;
+		}
+		return null;
+	}
+	
+	public void addBooking(Order order) {
+		for(Room room : rooms) {
+			if(room.getRoomNumber() == order.getRoomNumber()) {
+				room.addOrder(order);
+				return;
+			}
+		}
 	}
 	
 	public void print() {

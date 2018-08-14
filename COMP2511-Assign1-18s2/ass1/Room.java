@@ -28,7 +28,7 @@ public class Room {
 		return orders;
 	}
 	
-	public Order makeOrder(String name, LocalDate startDate, int length) {
+	public Order makeOrder(String name, LocalDate startDate, Capacity capacity, int length) {
 		boolean available = true;
 		for(Order order : orders) {
 			if (startDate.isAfter(order.getEndDate()) || startDate.plusDays(length-1).isBefore(order.getStartDate())) {
@@ -36,8 +36,10 @@ public class Room {
 				available = false;
 			}
 		}
-		if(available) {
-			return new Order(name, startDate, length);
+		if(available && this.capacity.equals(capacity)) {
+			Order order = new Order(name, this.roomNumber, startDate, length);
+			addOrder(order);
+			return order;
 		}
 		return null;
 	}
