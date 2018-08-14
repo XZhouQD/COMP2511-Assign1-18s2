@@ -16,20 +16,12 @@ public class Hotel {
 	public boolean addRoom(String roomNumber, Capacity capacity) {
 		boolean hasRoom = false;
 		for(Room room : rooms)
-			if(room.getRoomNumber() == roomNumber)
+			if(room.getRoomNumber().equals(roomNumber))
 				hasRoom = true;
 		if(hasRoom)
 			return false;
 		else {
 			Room newRoom = new Room(roomNumber, this.name, capacity);
-			for (int i = 0; i < rooms.size(); i++) {
-				if(Integer.parseInt(rooms.get(i).getRoomNumber()) < Integer.parseInt(roomNumber))
-					continue;
-				else {
-					rooms.add(i, newRoom);
-					return true;
-				}
-			}
 			rooms.add(newRoom);
 			return true;
 		}

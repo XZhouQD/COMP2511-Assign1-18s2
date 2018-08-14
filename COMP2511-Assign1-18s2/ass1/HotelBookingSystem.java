@@ -113,54 +113,29 @@ public class HotelBookingSystem {
 			for(int i = 0; i < bookNum1; i++) {
 				Order newOrder = hotel.tryBooking(name, capa1, startDate, bookLength);
 				if(newOrder == null) hotelFit = false;
-				else if(!newOrder.equals(emptyOrder)) {
-					for(int i1 = 0; i1 < orderList.size(); i1++) {
-						if(Integer.parseInt(orderList.get(i1).getRoomNumber()) < Integer.parseInt(newOrder.getRoomNumber()))
-							continue;
-						else {
-							orderList.add(i1, newOrder);
-							break;
-						}
-					}
-					if(!orderList.contains(newOrder)) 
-						orderList.add(newOrder);
-				}
+				else if(!newOrder.equals(emptyOrder))
+					orderList.add(newOrder);
 			}
 			for(int i = 0; i < bookNum2; i++) {
 				Order newOrder = hotel.tryBooking(name, capa2, startDate, bookLength);
 				if(newOrder == null) hotelFit = false;
-				else if(!newOrder.equals(emptyOrder)){
-					for(int i1 = 0; i1 < orderList.size(); i1++) {
-						if(Integer.parseInt(orderList.get(i1).getRoomNumber()) < Integer.parseInt(newOrder.getRoomNumber()))
-							continue;
-						else {
-							orderList.add(i1, newOrder);
-							break;
-						}
-					}
-					if(!orderList.contains(newOrder)) 
-						orderList.add(newOrder);
-				}
+				else if(!newOrder.equals(emptyOrder))
+					orderList.add(newOrder);
 			}
 			for(int i = 0; i < bookNum3; i++) {
 				Order newOrder = hotel.tryBooking(name, capa3, startDate, bookLength);
 				if(newOrder == null) hotelFit = false;
-				else if(!newOrder.equals(emptyOrder)){
-					for(int i1 = 0; i1 < orderList.size(); i1++) {
-						if(Integer.parseInt(orderList.get(i1).getRoomNumber()) < Integer.parseInt(newOrder.getRoomNumber()))
-							continue;
-						else {
-							orderList.add(i1, newOrder);
-							break;
-						}
-					}
-					if(!orderList.contains(newOrder)) 
+				else if(!newOrder.equals(emptyOrder)) 
 						orderList.add(newOrder);
-				}
 			}
 			if(hotelFit == true) {
+				ArrayList<Order> returnOrderList = new ArrayList<Order>();
+				for(Order order: orderList) 
+					for(Room room : hotel.getRooms()) 
+						if(order.getRoomNumber().equals(room.getRoomNumber()))
+							returnOrderList.add(order);
 				String output = name + " " + hotel.getName();
-				for(Order order : orderList)
+				for(Order order : returnOrderList)
 					output += " " + order.getRoomNumber();
 				this.bookNames.add(name);
 				return output;
