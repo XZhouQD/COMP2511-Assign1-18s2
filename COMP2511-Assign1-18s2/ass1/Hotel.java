@@ -21,7 +21,14 @@ public class Hotel {
 		if(hasRoom)
 			return false;
 		else {
-			rooms.add(new Room(roomNumber, this.name, capacity));
+			Room newRoom = new Room(roomNumber, this.name, capacity);
+			for (int i = 0; i < rooms.size(); i++) {
+				if(Integer.parseInt(rooms.get(i).getRoomNumber()) < Integer.parseInt(roomNumber))
+					continue;
+				else
+					rooms.add(i, newRoom);
+			}
+			rooms.add(newRoom);
 			return true;
 		}
 	}
@@ -55,6 +62,6 @@ public class Hotel {
 	
 	public void print() {
 		for(Room room: rooms)
-			System.out.println(name + " " + room.toString());
+			System.out.println(room.toString());
 	}
 }

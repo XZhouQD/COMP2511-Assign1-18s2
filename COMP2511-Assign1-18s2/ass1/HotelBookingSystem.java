@@ -178,7 +178,6 @@ public class HotelBookingSystem {
 					}
 				}
 			}
-			System.out.println(name +"'s order has beed recovered");
 			return result;
 		} else {
 			return result;

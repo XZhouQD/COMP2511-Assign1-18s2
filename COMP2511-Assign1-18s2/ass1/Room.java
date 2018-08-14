@@ -48,6 +48,14 @@ public class Room {
 	}
 	
 	public void addOrder(Order order) {
+		for (int i = 0; i < orders.size(); i++) {
+			if (orders.get(i).getStartDate().isBefore(order.getStartDate()))
+				continue;
+			else {
+				orders.add(i, order);
+				return;
+			}
+		}
 		orders.add(order);
 	}
 	
