@@ -1,0 +1,22 @@
+Hotel Black 105 2
+Hotel Black 106 3
+Hotel Black 108 1
+Hotel Black 201 2
+Hotel Black 202 1
+Hotel Black 204 3
+Hotel Black 104 2
+	# Add Rooms for Hotels
+Booking Alpha Jan 4 2 single 2 double 2 triple 2
+Booking Lima Jul 19 3 double 2 single 2
+Booking Bravo Jan 9 1 single 1 double
+Booking Juliet Jun 3 2 single 1 double 1
+Booking Delta Feb 17 3 single 2
+Booking Echo Feb 22 2 single 1 double 3
+Booking Golf Apr 4 2 single 2 triple 1
+Booking Charlie Jan 11 2 triple 1 double 1 single 1
+Booking India May 6 4 single 2 double 3 triple 2
+Booking Foxtrot Mar 21 3 double 3 triple 2
+Booking Kilo Jun 29 1 single 1 triple 2
+	# large amount of orders test, these orders should contains no overlap and all success
+Print Black
+	# check if all rooms' orders are in date order

@@ -1,0 +1,20 @@
+Hotel Delim 102 1
+Hotel Delim 103 2
+Hotel Delim 101 3
+	# Hotel Delim has room 102 103 101 with capacity 1 2 3
+Booking Juliet Jan 17 2 single 1 double 1
+	# Output Booking Juliet Delim 102 103
+Change Juliet Jan 12 3 single 1
+	# Output Change Juliet Delim 102
+Change Juliet Feb 2 4 triple 1
+	# Output Change Juliet Delim 101
+Change Juliet Feb 6 1 double 2
+	# Output Change Rejected
+Change Juliet Feb 21 2 double 1 triple 1
+	# Output Change Juliet Delim 103 101
+Change Juliet Mar 3 2 single 1 triple 1
+	# Output Change Juliet Delim 102 101
+Change Juliet Mar 9 1 single 2
+	# Output Change Rejected
+Print Delim
+	# A sequence of changing, room 102 101 should be finally reserved
