@@ -183,6 +183,7 @@ public class HotelBookingSystem {
 					}
 				}
 			}
+			bookNames.add(name);
 			return result;
 		} else {
 			return result;
