@@ -130,8 +130,8 @@ public class HotelBookingSystem {
 			}
 			if(hotelFit == true) {
 				ArrayList<Order> returnOrderList = new ArrayList<Order>();
-				for(Order order: orderList) 
-					for(Room room : hotel.getRooms()) 
+				for(Room room : hotel.getRooms())
+					for(Order order: orderList)
 						if(order.getRoomNumber().equals(room.getRoomNumber()))
 							returnOrderList.add(order);
 				String output = name + " " + hotel.getName();
