@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -52,15 +51,15 @@ public class HotelBookingSystem {
 	
 	public void functionDistributor (String input) throws ParseException {
 		String[] arguments = input.split(" ");
-		if(arguments[0] == "Hotel")
+		if(arguments[0].equals("Hotel")) 
 			this.addHotelRoom(arguments[1], arguments[2], arguments[3]);
-		if(arguments[0] == "Cancel")
+		if(arguments[0].equals("Cancel"))
 			System.out.println("Cancel "+this.cancelBooking(arguments[1]));
-		if(arguments[0] == "Print")
+		if(arguments[0].equals("Print"))
 			this.printHotel(arguments[1]);
-		if(arguments[0] == "Booking")
+		if(arguments[0].equals("Booking"))
 			System.out.println("Booking " + this.bookRoom(arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6], this.getStringByIndex(arguments, 7), this.getStringByIndex(arguments, 8), this.getStringByIndex(arguments, 9), this.getStringByIndex(arguments, 10)));
-		if(arguments[0] == "Change")
+		if(arguments[0].equals("Change"))
 			System.out.println("Change " + this.changeBooking(arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6], this.getStringByIndex(arguments, 7), this.getStringByIndex(arguments, 8), this.getStringByIndex(arguments, 9), this.getStringByIndex(arguments, 10)));
 	}
 	
@@ -69,7 +68,7 @@ public class HotelBookingSystem {
 		boolean RoomSuccess = false;
 		Capacity capa = Capacity.values()[Integer.parseInt(capacity)-1];
 		for(Hotel hotel: hotelList) {
-			if(hotel.getName() == hotelName) {
+			if(hotel.getName().equals(hotelName)) {
 				hotelExist = true;
 				RoomSuccess = hotel.addRoom(roomNumber, capa);
 				break;
@@ -168,7 +167,7 @@ public class HotelBookingSystem {
 		}
 		bookNames.remove(name);
 		String result = this.bookRoom(name, month, day, length, size1, num1, size2, num2, size3, num3);
-		if(result == "Rejected") {
+		if(result.equals("Rejected")) {
 			for(Order order : originalOrders) {
 				for(Hotel hotel: hotelList) {
 					if(hotel.getName() == order.getHotelName()) {
@@ -206,7 +205,7 @@ public class HotelBookingSystem {
 	
 	public void printHotel(String hotelName) {
 		for(Hotel hotel: hotelList)
-			if(hotel.getName() == hotelName)
+			if(hotel.getName().equals(hotelName))
 				hotel.print();
 	}
 

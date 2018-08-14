@@ -33,7 +33,7 @@ public class Room {
 	public Order makeOrder(String name, LocalDate startDate, Capacity capacity, int length) {
 		boolean available = true;
 		for(Order order : orders) {
-			if (startDate.isAfter(order.getEndDate()) || startDate.plusDays(length-1).isBefore(order.getStartDate())) {
+			if (startDate.isAfter(order.getEndDate()) || startDate.isEqual(order.getEndDate()) || startDate.plusDays(length-1).isEqual(order.getStartDate()) || startDate.plusDays(length-1).isBefore(order.getStartDate())) {
 			} else {
 				available = false;
 			}
