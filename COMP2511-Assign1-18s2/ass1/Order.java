@@ -13,7 +13,16 @@ public class Order {
 	private LocalDate endDate;
 	private int length;
 	
-	public Order(String name, String hotelName, String roomNumber, LocalDate startDate, int length) {
+	/*
+	 * initiate an order
+	 * @param name customer name
+	 * @param hotelName the name of hotel
+	 * @param roomNumber the roomNumber of order
+	 * @param startDate the starting of order
+	 * @param length how many nights
+	 * @return order the proper order contains all information
+	 */
+	public Order(String name, String hotelName, String roomNumber, LocalDate startDate, int length){
 		super();
 		this.name = name;
 		this.hotelName = hotelName;
@@ -23,31 +32,56 @@ public class Order {
 		this.length = length;
 	}
 	
+	/*
+	 * get customer name from order
+	 * @return name of customer
+	 */
 	public String getName() {
 		return this.name;
 	}
 	
+	/*
+	 * get hotel name of order
+	 * @return hotelName of order
+	 */
 	public String getHotelName() {
 		return this.hotelName;
 	}
 	
+	/*
+	 * get roomNumber of order
+	 * @return roomNumber of order
+	 */
 	public String getRoomNumber() {
 		return this.roomNumber;
 	}
 	
+	/*
+	 * get start date of order
+	 * @return startDate of order
+	 */
 	public LocalDate getStartDate() {
 		return this.startDate;
 	}
 	
+	/*
+	 * get end date of order
+	 * @return endDate of order
+	 */
 	public LocalDate getEndDate() {
 		return this.endDate;
 	}
 	
+	/*
+	 * get number of nights of order
+	 * @return length of order
+	 */
 	public int getLength() {
 		return this.length;
 	}
 	
 	public String toString() {
+		// order should return string with start date and length
 		return startDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH) + " " + startDate.getDayOfMonth() + " " + length;
 	}
 
