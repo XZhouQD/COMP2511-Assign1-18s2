@@ -89,18 +89,22 @@ public class HotelBookingSystem {
 	 */
 	public void addHotelRoom(String hotelName, String roomNumber, String capacity) {
 		boolean hotelExist = false;
+		boolean roomExist = false;
 		Capacity capa = Capacity.values()[Integer.parseInt(capacity)-1];
 		for(Hotel hotel: hotelList) {
 			if(hotel.getName().equals(hotelName)) {
 				hotelExist = true;
-				hotel.addRoom(roomNumber, capa);
+				roomExist = hotel.addRoom(roomNumber, capa);
 				break;
 			}
 		}
 		if(!hotelExist) {
 			Hotel hotel = new Hotel(hotelName);
-			hotel.addRoom(roomNumber, capa);
+			roomExist = hotel.addRoom(roomNumber, capa);
 			hotelList.add(hotel);
+		}
+		if(roomExist) {
+			System.out.println("Add Room rejected");
 		}
 	}
 	
