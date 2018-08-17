@@ -17,12 +17,20 @@ public class HotelBookingSystem {
 	private ArrayList<String> bookNames;
 	private Order emptyOrder;
 	
+	/*
+	 * Initialise hotel booking system, construct list for hotel and booking names, create a default
+	 * empty order for compare using
+	 */
 	public HotelBookingSystem() {
 		this.hotelList = new ArrayList<Hotel>();
 		this.bookNames = new ArrayList<String>();
 		this.emptyOrder = new Order("empty", "-1", "-1", LocalDate.parse("1980-01-01"), 1);
 	}
-	
+	/*
+	 * Main function, keep a scanner until input file finish
+	 * need a argument for input file name
+	 * @param inputFile a input file for system
+	 */
 	public static void main(String[] args) throws ParseException {
 		// TODO Auto-generated method stub
 		HotelBookingSystem HBSys = new HotelBookingSystem();
@@ -40,6 +48,12 @@ public class HotelBookingSystem {
 		}
 	}
 	
+	/*
+	 * get string from list by index and handle out of bounds
+	 * @param arguments a list of arguments for functions
+	 * @param index the index of specific argument
+	 * @return the argument at specific index
+	 */
 	public String getStringByIndex(String[] arguments, int index) {
 		try {
 			String toReturn = arguments[index];
@@ -49,6 +63,10 @@ public class HotelBookingSystem {
 		}
 	}
 	
+	/*
+	 * distribute input to relavent functions
+	 * @param input one line of input
+	 */
 	public void functionDistributor (String input) throws ParseException {
 		String[] arguments = input.split(" ");
 		if(arguments[0].equals("Hotel")) 
@@ -63,30 +81,49 @@ public class HotelBookingSystem {
 			System.out.println("Change " + this.changeBooking(arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6], this.getStringByIndex(arguments, 7), this.getStringByIndex(arguments, 8), this.getStringByIndex(arguments, 9), this.getStringByIndex(arguments, 10)));
 	}
 	
-	public boolean addHotelRoom(String hotelName, String roomNumber, String capacity) {
+	/*
+	 * This function construct new room and new hotel(if not exist)
+	 * @param hotelName the name of hotel (new or existing)
+	 * @param roomNumber the roomnumber of new room
+	 * @param capacity the capacity of new room
+	 */
+	public void addHotelRoom(String hotelName, String roomNumber, String capacity) {
 		boolean hotelExist = false;
-		boolean RoomSuccess = false;
 		Capacity capa = Capacity.values()[Integer.parseInt(capacity)-1];
 		for(Hotel hotel: hotelList) {
 			if(hotel.getName().equals(hotelName)) {
 				hotelExist = true;
-				RoomSuccess = hotel.addRoom(roomNumber, capa);
+				hotel.addRoom(roomNumber, capa);
 				break;
 			}
 		}
 		if(!hotelExist) {
 			Hotel hotel = new Hotel(hotelName);
-			RoomSuccess = hotel.addRoom(roomNumber, capa);
+			hotel.addRoom(roomNumber, capa);
 			hotelList.add(hotel);
-			hotelExist = true;
 		}
-		return RoomSuccess;
 	}
 	
+	/*
+	 * This function will try book rooms for specific customer
+	 * @param name customer name
+	 * @param month booking start month
+	 * @param day booking start date
+	 * @param length how many nights for booking
+	 * @param size1 room capacity 1
+	 * @param num1 the number of rooms with capacity 1
+	 * @param size2 room capacity 2, can be null
+	 * @param num2 the number of rooms with capacity 2, can be null
+	 * @param size3 room capacity 3, can be null
+	 * @param num3 the number of rooms with capacity 3, can be null
+	 * @return the string of room booking result
+	 */
 	public String bookRoom(String name, String month, String day, String length, String size1, String num1, String size2, String num2, String size3, String num3) throws ParseException {
+		// if same name booking already exist, reject
 		if(bookNames.contains(name)) {
 			return "Rejected";
 		}
+		//process with arugments to proper type
 		Date month2 = new SimpleDateFormat("MMM", Locale.ENGLISH).parse(month);
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(month2);
@@ -107,42 +144,49 @@ public class HotelBookingSystem {
 			bookNum3 = Integer.parseInt(num3);
 			capa3 = Capacity.valueOf(size3.toUpperCase());
 		}
+		//make an empty orderList and start to try booking
 		ArrayList<Order> orderList = new ArrayList<Order>();
+		//try through each hotel, order must be completed in one hotel or fully rejected
 		for(Hotel hotel : hotelList) {
 			boolean hotelFit = true;
+			//try book room type 1
 			for(int i = 0; i < bookNum1; i++) {
 				Order newOrder = hotel.tryBooking(name, capa1, startDate, bookLength);
-				if(newOrder == null) hotelFit = false;
-				else if(!newOrder.equals(emptyOrder))
+				if(newOrder == null) hotelFit = false; //null means order cannot be complete
+				else if(!newOrder.equals(emptyOrder)) 
 					orderList.add(newOrder);
 			}
+			//try book room type 2
 			for(int i = 0; i < bookNum2; i++) {
 				Order newOrder = hotel.tryBooking(name, capa2, startDate, bookLength);
-				if(newOrder == null) hotelFit = false;
-				else if(!newOrder.equals(emptyOrder))
+				if(newOrder == null) hotelFit = false; 
+				else if(!newOrder.equals(emptyOrder)) //emptyOrder means arguments contains null, use for handle null arguments for type 2 and 3
 					orderList.add(newOrder);
 			}
+			//try book room type 3
 			for(int i = 0; i < bookNum3; i++) {
 				Order newOrder = hotel.tryBooking(name, capa3, startDate, bookLength);
 				if(newOrder == null) hotelFit = false;
 				else if(!newOrder.equals(emptyOrder)) 
 						orderList.add(newOrder);
 			}
-			if(hotelFit == true) {
+			if(hotelFit == true) { //if the order can be completed in one hotel
 				ArrayList<Order> returnOrderList = new ArrayList<Order>();
 				for(Room room : hotel.getRooms())
 					for(Order order: orderList)
 						if(order.getRoomNumber().equals(room.getRoomNumber()))
 							returnOrderList.add(order);
+							//add order pending in orderList to returnOrderList in order of rooms
 				String output = name + " " + hotel.getName();
 				for(Order order : returnOrderList)
 					output += " " + order.getRoomNumber();
 				this.bookNames.add(name);
+				//construct booking result string, add customer to booking list and return
 				return output;
 			}
-			else {
+			else { //order cannot be completed in this hotel
 				hotelFit = true;
-				for(Room room : hotel.getRooms()) {
+				for(Room room : hotel.getRooms()) { //cancel all previous orders in this hotel for the customer
 					boolean release = true;
 					while(release)
 						release = (room.releaseOrder(name) != null);
@@ -150,13 +194,30 @@ public class HotelBookingSystem {
 				orderList.clear();
 			}
 		}
+		//finish loop and no return means order cannot be completed, reject
 		return "Rejected";
 	}
 	
+	/*
+	 * this function is used for change a customer's booking
+	 * @param name customer name
+	 * @param month booking start month
+	 * @param day booking start date
+	 * @param length how many nights for booking
+	 * @param size1 room capacity 1
+	 * @param num1 the number of rooms with capacity 1
+	 * @param size2 room capacity 2, can be null
+	 * @param num2 the number of rooms with capacity 2, can be null
+	 * @param size3 room capacity 3, can be null
+	 * @param num3 the number of rooms with capacity 3, can be null
+	 * @return the string of room changing result
+	 */
 	public String changeBooking(String name, String month, String day, String length, String size1, String num1, String size2, String num2, String size3, String num3) throws ParseException {
+		//if customer does not have any booking, reject
 		if(!bookNames.contains(name)) {
 			return "Rejected";
 		}
+		//cancel all previous order of the customer and place it in a temporary storing list
 		ArrayList<Order> originalOrders = new ArrayList<Order>();		
 		for(Hotel hotel : hotelList) {
 			for(Room room : hotel.getRooms()) {
@@ -171,9 +232,10 @@ public class HotelBookingSystem {
 			}
 		}
 		bookNames.remove(name);
+		//try a booking of new requirement
 		String result = this.bookRoom(name, month, day, length, size1, num1, size2, num2, size3, num3);
-		if(result.equals("Rejected")) {
-			for(Order order : originalOrders) {
+		if(result.equals("Rejected")) { //if booking rejected, 
+			for(Order order : originalOrders) { //put all previous orders back
 				for(Hotel hotel: hotelList) {
 					if(hotel.getName() == order.getHotelName()) {
 						for(Room room : hotel.getRooms()) {
@@ -184,15 +246,19 @@ public class HotelBookingSystem {
 				}
 			}
 			bookNames.add(name);
-			return result;
-		} else {
+			return result; //and return rejected
+		} else { //else simply return new booking result
 			return result;
 		}
 	}
-	
+	/*
+	 * this function is used for cancel booking of a customer
+	 * @param name customer name
+	 * @return cancel result string
+	 */
 	public String cancelBooking(String name) {
-		if(bookNames.contains(name)) {
-			for(Hotel hotel : hotelList) {
+		if(bookNames.contains(name)) { //if customer have previous booking
+			for(Hotel hotel : hotelList) { //delete all his orders in all hotel and rooms
 				for(Room room : hotel.getRooms()) {
 					boolean release = true;
 					while(release) {
@@ -204,11 +270,15 @@ public class HotelBookingSystem {
 				}
 			}
 			return name;
-		} else
+		} else //else reject as no booking
 			return "Rejected";
 		
 	}
 	
+	/*
+	 * This function print all status of a hotel
+	 * @param hotelName the name of hotel to be print
+	 */
 	public void printHotel(String hotelName) {
 		for(Hotel hotel: hotelList)
 			if(hotel.getName().equals(hotelName))
