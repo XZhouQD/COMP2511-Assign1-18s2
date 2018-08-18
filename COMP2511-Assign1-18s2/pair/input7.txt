@@ -1,0 +1,9 @@
+Hotel Cyan 101 2
+Booking Juliet Dec 30 3 double 1
+	# test handle end of year booking
+	# Output Booking Juliet Cyan 101
+Booking Mike Dec 28 7 double 1
+	# test handle rejection of end of year booking with time overlap
+	# Output Booking rejection
+Print Cyan
+	# Output Cyan 101 Dec 30 3

@@ -1,0 +1,9 @@
+Hotel Amber 101 1
+Booking Juliet Dec 31 3 single 1
+	# over year booking, should covers 2018-12-31 to 2019-1-2
+	# Output Booking Juliet Amber 101
+Booking Mike Jan 1 2 single 1
+	# check if collapse with previous order, should success as it is 2018-1-1 to 2018-1-2, no overlap
+	# Output Booking Mike Amber 101
+Print Amber
+	# Output Amber 101 Jan 1 2 Dec 31 3

@@ -1,0 +1,5 @@
+Booking Juliet Dec 21 1 single 1
+	# Test Booking with no room and hotel, should rejected
+	# Output Booking rejected
+Print Delim
+	# Should output nothing
