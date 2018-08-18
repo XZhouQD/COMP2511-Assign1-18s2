@@ -1,0 +1,38 @@
+Hotel Amber 103 3	# Hotel Amber has room 103 with capacity 3
+Hotel Amber 102 2	# Hotel Amber has room 102 with capacity 2
+Hotel Amber 101 1	# Hotel Amber has room 101 with capacity 1
+Hotel Cyan 306 2	# Hotel Cyan has room 306 with capacity 2
+Hotel Cyan 205 1	# Hotel Cyan has room 205 with capacity 1
+Booking Juliet Apr 29 3 single 1 double 1
+	# Juliet's Booking request is for 1 single and 1 double on Apr 29 for 3 nights, assign room 102, 101 of Hotel Amber
+	# Output Booking Juliet Amber 102 101
+	# This is test for output in insertion order
+Booking Mike May 1 2 single 1 double 1
+	# Mike's booking request is for 1 single and 1 double on May 1 for 2 nights, assign room 306, 205 of Hotel Cyan since 102,101 of Amber is occupied
+	# Output Booking Mike Cyan 306 205
+	# This is test for booking over month overlay, as Juliet's booking is last over Apr and May
+Hotel Black 116 2	# Hotel Black has room 116 with capacity 2
+Hotel Black 118 2	# Hotel Black has room 118 with capacity 2
+Hotel Amber 104 1	# Hotel Amber has room 104 with capacity 1
+Hotel Amber 105 1	# Hotel Amber has room 105 with capacity 1
+	# These are used for testing adding rooms later than first booking
+Booking Oscar Apr 27 1 single 2
+	# Oscar's Booking request is for 2 single on Apr 27 for 1 nights, assign room 101,104 of Hotel Amber
+	# Output Booking Oscar Amber 101 104
+	# This is test for assign multiple order to one room(101) and test for new room(104)
+Change Mike May 3 2 single 1 double 1
+	# Change Mike's booking to 1 single 1 double on May 3 for 2 nights
+	# Deassign Room 306 and 205 of Cyan and assign 102 and 101 of Amber
+	# Output Change Mike Amber 102 101
+	# This is test for basic change method, change = success
+Booking Romeo May 1 4 triple 1 single 1
+	# Romeo's booking request is for 1 triple and 1 single on May 1 for 4 nights, assign room 103, 104(as 101 occupied) of Amber
+	# Output Booking Romeo Amber 103 104
+Cancel Juliet
+	# Cancel booking 1
+	# Deassign Room 102 101 of Amber
+	# Output Cancel Juliet
+Print Amber
+Print Black
+Print Cyan
+	# Print out occupancy of all rooms at three hotels, in order of room declarations then date

@@ -1,0 +1,15 @@
+Booking Juliet Amber 102 101
+Booking Mike Cyan 306 205
+Booking Oscar Amber 101 104
+Change Mike Amber 102 101
+Booking Romeo Amber 103 104
+Cancel Juliet
+Amber 103 May 1 4
+Amber 102 May 3 2
+Amber 101 Apr 27 1 May 3 2
+Amber 104 Apr 27 1 May 1 4
+Amber 105
+Black 116
+Black 118
+Cyan 306
+Cyan 205

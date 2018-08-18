@@ -1,0 +1,30 @@
+Hotel Amber 101 2	#Hotel Amber has room 101 with capacity 2
+Hotel Amber 102 2	#Hotel Amber has room 102 with capacity 2
+Hotel Amber 103 1	#Hotel Amber has room 103 with capacity 1
+Cancel Charlie
+	# Test for cancel with no booking, should reject
+	# Output Cancel Rejected
+Booking Juliet Feb 11 3 single 2
+	# Juliet's booking request is 2 single on Feb 11 for 3 nights, cannot complete as room not enough
+	# Output Booking Rejected
+	# This is test for room not enough to fullfill
+Booking Mike Apr 19 2 double 2
+	# Mike's booking request is 2 double on Apr 19 for 2 nights, assign Room 101 and 102
+	# Output Booking Mike Amber 101 102
+	# Test for multiple requirement on one size
+Booking Oscar Jun 6 3 single 1 double 1
+	# Oscar's booking request is 1 double and 1 single on Jun 6 for 3 nights, assign Room 101 and 103
+	# Output Booking Oscar Amber 101 103
+Booking Mike Jul 5 1 single 1
+	# Mike's second book, should reject anyway
+	# Output Booking Rejected
+	# Test for multiple booking rejection
+Change Mike Apr 21 2 double 1 single 2
+	# Mike's order change to 1 double and 2 single on Apr 21 for 2 nights, as single room not enough, should reject and keep original booking
+	# Output Change Rejected
+	# Test for change rejection and keep original booking
+Booking Romeo Jun 3 5 double 1 single 1
+	# Romeo's booking request is 1 double and 1 single on Jun 3 for 5 nights, time interval overlap with Oscar's booking, should rejected
+	# Output Booking Rejected
+	# Test for time overlap booking rejection
+Print Amber

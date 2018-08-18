@@ -1,0 +1,10 @@
+Cancel Rejected
+Booking Rejected
+Booking Mike Amber 101 102
+Booking Oscar Amber 101 103
+Booking Rejected
+Change Rejected
+Booking Rejected
+Amber 101 Apr 19 2 Jun 6 3
+Amber 102 Apr 19 2
+Amber 103 Jun 6 3
