@@ -103,7 +103,7 @@ public class HotelBookingSystem {
 			roomExist = hotel.addRoom(roomNumber, capa);
 			hotelList.add(hotel);
 		}
-		if(roomExist) {
+		if(!roomExist) {
 			System.out.println("Add Room rejected");
 		}
 	}
@@ -125,7 +125,7 @@ public class HotelBookingSystem {
 	public String bookRoom(String name, String month, String day, String length, String size1, String num1, String size2, String num2, String size3, String num3) throws ParseException {
 		// if same name booking already exist, reject
 		if(bookNames.contains(name)) {
-			return "Rejected";
+			return "rejected";
 		}
 		//process with arugments to proper type
 		Date month2 = new SimpleDateFormat("MMM", Locale.ENGLISH).parse(month);
@@ -199,7 +199,7 @@ public class HotelBookingSystem {
 			}
 		}
 		//finish loop and no return means order cannot be completed, reject
-		return "Rejected";
+		return "rejected";
 	}
 	
 	/*
@@ -219,7 +219,7 @@ public class HotelBookingSystem {
 	public String changeBooking(String name, String month, String day, String length, String size1, String num1, String size2, String num2, String size3, String num3) throws ParseException {
 		//if customer does not have any booking, reject
 		if(!bookNames.contains(name)) {
-			return "Rejected";
+			return "rejected";
 		}
 		//cancel all previous order of the customer and place it in a temporary storing list
 		ArrayList<Order> originalOrders = new ArrayList<Order>();		
@@ -238,7 +238,7 @@ public class HotelBookingSystem {
 		bookNames.remove(name);
 		//try a booking of new requirement
 		String result = this.bookRoom(name, month, day, length, size1, num1, size2, num2, size3, num3);
-		if(result.equals("Rejected")) { //if booking rejected, 
+		if(result.equals("rejected")) { //if booking rejected, 
 			for(Order order : originalOrders) { //put all previous orders back
 				for(Hotel hotel: hotelList) {
 					if(hotel.getName() == order.getHotelName()) {
@@ -275,7 +275,7 @@ public class HotelBookingSystem {
 			}
 			return name;
 		} else //else reject as no booking
-			return "Rejected";
+			return "rejected";
 		
 	}
 	
